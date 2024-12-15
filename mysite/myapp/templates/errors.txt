@@ -1,0 +1,2 @@
+when we decewase less than 1 server is shuttinf down
+when we click on add to cart without login it should redirect to login page or pop a message login.

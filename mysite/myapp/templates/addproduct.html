@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Products
+{% endblock %}
+
+{% block content %}
+
+<section id="products">
+    <div class="container-fluid">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!--  -->
+            {{ form.as_p }} 
+            <!-- requesting django to generate the form as p -->
+            <button type="submit">add</button>
+        </form>
+    
+    </div>
+</section>
+{% endblock %}

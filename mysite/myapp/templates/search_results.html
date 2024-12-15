@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+    {{query}}
+{% endblock %}
+{% block search %}
+    {{query}}
+{% endblock %}
+
+
+{% block content %}
+{% if length == 0 %}
+<h2>{{query}} not found ...</h2>
+{% else %}
+<section id="products">
+    <div class="container">
+      {% for p in prods %}
+  
+      <div class="card">
+        <div class="img">
+          <img src="{{p.pic.url}}" class="card-img-top" alt="..." />
+        </div>
+  
+        <div class="card-body">
+          <a href="{% url 'p_details' p.pk %}">
+            <h5 class="card-title">{{p.name}}</h5>
+          </a>
+          
+          
+  
+          <p> RS {{p.price}}</p>
+          <div class="card-footer">
+            
+            <a  class="card-link CARD" href="{% url 'Cart:add_to_cart' p.id %}" class="btn btn-primary">Add to cart </a>  
+            {% comment %} <button  class="card-link CARD2" >Buy now</a> {% endcomment %}
+          </div>
+        </div>
+      </div>
+      <!-- product_list is default -->
+  
+      {% endfor %}
+    </div>
+</section>
+{% endif %}
+{% endblock %}

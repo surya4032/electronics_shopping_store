@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    My Orders
+{% endblock %}
+
+{% block content %}
+<center><h1>My Orders</h1></center>
+
+{% if orders %}
+<section id="product">
+    <div class="contain1">
+        {% for order in orders %}
+            <div class="order-cart">
+                <div id="order-view">
+                    <div>
+                        <p><strong>Order Placed:</strong> {{ order.order_date }}</p>
+                    </div>
+                    <div>
+                        <strong>Total </strong>
+                        <div>₹{{ order.total_amount }}</div>
+                    </div>
+                    <div >
+                        <strong>Order #{{ order.id }}</strong>
+                        {% if order.status == 'PENDING'%}
+                        <p><strong>Status:</strong> {{ order.status }}</p>
+                        <a class="btn btn-primary" href ="{% url 'payment:create_razorpay_order' order.id %}"> Complete payment</a>
+                        {% else %}
+                        <p><strong>Status:</strong> {{ order.status }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                
+                
+                <h4>Order Details:</h4>
+    
+                
+                
+                {% for item in order.order_details.all %}
+                <div class="sub-div1">
+                    <div class="img1">
+                        <img src="{{item.order_item.pic.url}}">
+                    </div>
+                    <div class="description1">
+                        <strong>Product:</strong> {{ item.order_item.name }} 
+                        <p><strong>Quantity:</strong> {{ item.quantity }} </p>
+                        <strong>Price:</strong> ₹{{ item.price }}
+                    </div>
+                    
+                </div>
+                        
+                            
+                        
+                    {% endfor %}
+                
+                <!-- Displaying Address -->
+                <h4>Shipping Address:</h4>
+                {% if order.address %}
+                    <p><strong>Address Line 1:</strong> {{ order.address.address_line1 }}</p>
+                    <p><strong>Address Line 2:</strong> {{ order.address.address_line2 }}</p>
+                    <p><strong>City:</strong> {{ order.address.city }}</p>
+                    <p><strong>State:</strong> {{ order.address.state }}</p>
+                    <p><strong>ZIP Code:</strong> {{ order.address.zip_code }}</p>
+                    <p><strong>Country:</strong> {{ order.address.country }}</p>
+                {% else %}
+                    <p>No shipping address available.</p>
+                {% endif %}
+    
+                
+            </div>
+        {% endfor %}
+    </div>
+        
+        
+    {% else %}
+        <p>No orders found!</p>
+    {% endif %}
+    {% endblock %}
+</section>

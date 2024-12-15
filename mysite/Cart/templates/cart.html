@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+Cart
+{% endblock %}
+{% block content %}
+<section >
+{% if cart_items %}
+
+<div class="contain " id="product">
+    
+    <div class =" cart-page">
+        {% for item in cart_items %}
+          <div class="cart">
+              <div class="sub-div">
+                  <div class="col1">
+                      <div class="image">
+                          <a href="{% url 'p_details' item.product.pk %}">
+                              <img src=" {{item.product.pic.url}}" alt="">
+      
+                          </a>
+                      </div>
+                        <div class="cart-item-quantity" >
+                            
+                            
+                            <button onclick="updateCart('{% url 'Cart:remove_quantity' item.id %}', {{ item.id }} , false, '{{ csrf_token }}')">-</button>
+                            <span id="quantity-{{ item.id }}">{{ item.quantity }}</span>
+                            <button onclick="updateCart('{% url 'Cart:add_quantity' item.id %}', {{ item.id }}, true, '{{ csrf_token }}')">+</button>
+                           
+                        </div>
+                    </div>
+                  <div class="col2">
+                      <div class="description">
+                          <a href="{% url 'p_details' item.product.pk %}"><p id="para">{{item.product.name}}</p>
+                          </a>   
+                            <span style ="color:green"> Special</span> Price : Rs {{item.product.price}}</span>
+                            <div class="rem">
+                            <a href= "{% url 'Cart:remove' item.id %}">Remove</a>
+
+                            </div>             
+                      </div>
+                      <div class = "price" >
+                            Rs. <span id="total-price-{{ item.id }}">{{ item.get_total_price }}</span>
+                      </div>
+                      
+                     
+                    </div>
+                </div>
+              
+      
+          </div>
+        
+   
+        {% endfor %}
+          
+    </div>
+      
+      
+          
+      
+      
+    
+    
+
+    {% if cart_items %}
+    <div class="checkout">
+        <p><strong>Total Amount : Rs.<span id="overall-total">{{ total_price }}</span></strong></p>
+        <form action="{% url 'orders:create_order' %}" method="post" >
+            {% csrf_token %}
+            <button type ="submit" class=" btn btn-primary">
+                Place your order
+            </button>
+        </form>
+    
+    </div> 
+    {% endif %}
+    
+</div>
+{% else %}
+<div  class ="contain" id="product">
+    <p>Your card is empty</p>
+</div> 
+</section>
+{% endif %}
+
+
+{% endblock %}
+

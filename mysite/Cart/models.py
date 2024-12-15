@@ -1,0 +1,17 @@
+from django.db import models
+from myapp.models import Product 
+from django.contrib.auth.models import User
+#one attribute id is set fy default by django
+class CartItem(models.Model):
+    product = models.ForeignKey(Product,on_delete=models.CASCADE) #product attrivute is referencing particualr product according to the foreigh key #linking product id into cart table (model)
+    quantity = models.PositiveIntegerField(default=0)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    date_added = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f'{self.quantity} - {self.product.name}'
+    
+    def get_total_price(self):
+        return self.quantity * self.product.price
+
+# Create your models here.

@@ -1,0 +1,45 @@
+{% extends 'base.html' %} {% load static %} {% block title %} Products
+{%endblock %} {% block content %}
+<section id="products">
+  <div class="container">
+    {% for p in product_list %}
+
+    <div class="card">
+      <div class="img">
+        <img src="{{p.pic.url}}" class="card-img-top" alt="..." />
+      </div>
+
+      <div class="card-body">
+        <a href="{% url 'p_details' p.pk %}">
+          <h5 class="card-title">{{p.name}}</h5>
+        </a>
+        
+        
+
+        <p> RS {{p.price}}</p>
+        {% if  user.is_staff %}
+        <div class="card-footer"  style="display:none">
+          
+          <a  class="card-link CARD" href="{% url 'Cart:add_to_cart' p.id %}" class="btn btn-primary">Add to cart </a>
+          
+          
+          
+        </div>
+        {% else %}
+        
+        <div class="card-footer">
+          
+          <a  class="card-link CARD" href="{% url 'Cart:add_to_cart' p.id %}" class="btn btn-primary">Add to cart </a>
+          
+          
+          
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    <!-- product_list is default -->
+
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Registration
+
+{% endblock %}
+{% block content %}
+<section>
+    <div class="container-fluid" style="border: 1px solid darkblue; display: flex;justify-content: center; align-items: center; height: 400px;">
+        <div class="form">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <!--  -->
+                {{ form.as_p }} 
+                <!-- requesting django to generate the form as p -->
+                <button type="submit">sign up</button>
+                <span>Already a registered user <a  href="{% url 'login' %}" style="text-decoration:none; ">Login</a></span>
+            </form>
+        </div>
+        
+        
+    
+    </div>
+</section>
+{% endblock  %}
